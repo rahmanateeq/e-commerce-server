@@ -16,7 +16,10 @@ router.post("/", async (req, res) => {
     await category.save();
     res
       .status(201)
-      .json({ error: false, message: "Category added successfully", category });
+      .json({ error: false, 
+        message: "Category added successfully",
+        category 
+        });
   } catch (error) {
     res
       .status(500)
@@ -57,16 +60,18 @@ router.patch('/:categoryId',(req,res,next)=>{
     .then(result =>{
         console.log(result)
         res.status(200).json({
+            error:false,
             message:"Category Updated successfully",
-           
+            category:result  
         })
     })
     .catch(error =>{
-        res.status(500).json({
-            "message":"some error occured when updating function",
-             error: error
-             });
-    })
+    res.status(500).json({
+          error: true,
+          message: "Internal Server Error",
+          details: error.message,
+          });
+      })
 })
 //delete category
 router.delete("/:categoryId", async (req, res, next) => {
