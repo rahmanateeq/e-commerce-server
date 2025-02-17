@@ -34,8 +34,7 @@ router.get("/", (req, res) => {
     .exec()
     .then(result =>{
          const response ={
-            count:result.length,
-            Category:result.map(doc =>{
+            categories:result.map(doc =>{
                 return{
                 id:doc._id,
                 name:doc.name
