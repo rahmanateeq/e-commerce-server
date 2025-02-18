@@ -16,7 +16,8 @@ router.post("/", async (req, res) => {
     await category.save();
     res
       .status(201)
-      .json({ error: false, 
+      .json({ 
+        error: false, 
         message: "Category added successfully",
         category 
         });
@@ -25,12 +26,36 @@ router.post("/", async (req, res) => {
       .status(500)
       .json({
         error: true,
-        message: "Internal Server Error",
-        details: error.message,
+        message: "Internal Server Error",error,
+        
       });
   }
 });
 
+
+router.patch('/:categoryId',(req,res,next)=>{
+    const id = req.params.categoryId;
+
+    const updatedItem = req.body; // Take the entire body
+
+    Category.updateOne({ _id: id }, { $set: updatedItem })
+    .exec()
+    .then(result =>{
+        console.log(result)
+        res.status(200).json({
+            error:false,
+            message:"Category Updated successfully",
+            category:result  
+        })
+    })
+    .catch(error =>{
+    res.status(500).json({
+          error: true,
+          message: "Internal Server Error",error,
+        
+          });
+      })
+})
 // Get all categories
 router.get("/", (req, res) => {
     Category.find()
@@ -50,29 +75,6 @@ router.get("/", (req, res) => {
         res.status(500).json({error:error})
     })
 });
-router.patch('/:categoryId',(req,res,next)=>{
-    const id = req.params.categoryId;
-
-    const updatedItem = req.body; // Take the entire body
-
-    Category.updateOne({ _id: id }, { $set: updatedItem })
-    .exec()
-    .then(result =>{
-        console.log(result)
-        res.status(200).json({
-            error:false,
-            message:"Category Updated successfully",
-            category:result  
-        })
-    })
-    .catch(error =>{
-    res.status(500).json({
-          error: true,
-          message: "Internal Server Error",
-          details: error.message,
-          });
-      })
-})
 //delete category
 router.delete("/:categoryId", async (req, res, next) => {
     const id = req.params.categoryId;
