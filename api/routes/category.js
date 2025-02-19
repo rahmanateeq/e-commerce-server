@@ -41,7 +41,7 @@ router.patch('/:categoryId',(req,res,next)=>{
     Category.updateOne({ _id: id }, { $set: updatedItem })
     .exec()
     .then(result =>{
-        console.log(result)
+  
         res.status(200).json({
             error:false,
             message:"Category Updated successfully",

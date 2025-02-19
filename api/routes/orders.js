@@ -129,14 +129,14 @@ router.post("/", async (req, res) => {
 
       // Notify all clients about the new order
         io.emit("newOrder", { order: result });
-     
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error("Error sending email:", error.message);
-        } else {
-          console.log("Email sent:", info.response);
-        }
-      });
+     ///////////////////////// uncomment for e4mail
+      // transporter.sendMail(mailOptions, (error, info) => {
+      //   if (error) {
+      //     console.error("Error sending email:", error.message);
+      //   } else {
+      //     console.log("Email sent:", info.response);
+      //   }
+      // });
       res.status(201).json({
         message: "Order created successfully",
         order: result,
@@ -272,13 +272,13 @@ router.patch("/:orderId", async (req, res) => {
                 `,
               };
               
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    console.error("Error sending email:", error.message);
-                } else {
-                    console.log("Email sent successfully:", info.response);
-                }
-            });
+            // transporter.sendMail(mailOptions, (error, info) => {   //uncomment for email
+            //     if (error) {
+            //         console.error("Error sending email:", error.message);
+            //     } else {
+            //         console.log("Email sent successfully:", info.response);
+            //     }
+            // });
 
         }
 
